@@ -1,6 +1,7 @@
 import * as toxicity from '@tensorflow-models/toxicity';
 import express from 'express';
 import cors from 'cors';
+import utf8 from 'utf8';
 const app = express();
 
 import Tesseract from 'tesseract.js';
@@ -17,15 +18,16 @@ app.listen(3000, () =>
 
 app.get('/AI/', (req, res) => {
 
-    //get image url from request
-    var imageUrl = req.originalUrl.split('=')[1].replaceAll('%2F','/');
-    console.log(imageUrl);
+    const url = req.originalUrl.split('=')[1];
+    console.log(url);
+    const decodedURL = unescape(url);
+    console.log(decodedURL);
+
 
     //get text from the image
     Tesseract.recognize(
-        imageUrl,
-        'eng',
-        { logger: m => console.log(m) }
+        decodedURL,
+        'eng'
     ).then(({ data: { text } }) => {
         console.log(text);
 
@@ -57,6 +59,8 @@ app.get('/AI/', (req, res) => {
         }).catch(function (error) {
             console.log("load " + error);
         });
+    }).catch((error) => {
+        console.log(error);
     });
 
 
