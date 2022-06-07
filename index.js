@@ -7,8 +7,6 @@ const app = express();
 import Tesseract from 'tesseract.js';
 
 
-// ADD THIS
-
 app.use(cors());
 
 
