@@ -48,6 +48,7 @@ app.get('/AI/', (req, res) => {
                         break;
                     }
                 }
+                console.log("Final decision: " + ans);
                 res.send(ans);
 
             })
